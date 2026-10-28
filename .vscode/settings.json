@@ -1,0 +1,4 @@
+{
+    "discord.removeTimestamp": false,
+    "discord.removeRemoteRepository": true
+}

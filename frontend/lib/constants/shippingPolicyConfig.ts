@@ -1,0 +1,1 @@
+export const SHIPPING_LAST_UPDATED = "2026-10-26";
