@@ -18,11 +18,11 @@ advanced: {
   ipAddress: {
     ipAddressHeaders: ["cf-connecting-ip"],
   },
+  defaultCookieAttributes: {
+      sameSite: "none",
+      secure: true,
+    },
 },
- defaultCookieAttributes: {
-    sameSite: "none",
-    secure: true,
-  },
     emailAndPassword:{
         enabled: true,
         requireEmailVerification: true,
