@@ -19,6 +19,10 @@ export async function getSessionToken(req: NextRequest){
         if (!data || !data.session) {
             return null;
         }
+        console.log("Session API status:", response.status);
+console.log("Session data exists:", !!data);
+console.log("Session exists:", !!data?.session);
+console.log("Cookie forwarded:", !!req.headers.get("cookie"));
         return data.session;
     } catch (error) {
         console.error("Error fetching session token:", error);
