@@ -13,11 +13,13 @@ export const auth = betterAuth({
         provider: "pg",
         schema: schema
     }),
-    advanced: {
+   
+advanced: {
   ipAddress: {
-    ipAddressHeaders: ["x-real-ip"],
+    ipAddressHeaders: ["cf-connecting-ip"],
   },
 },
+
     emailAndPassword:{
         enabled: true,
         requireEmailVerification: true,
