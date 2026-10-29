@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+// const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface ApiErrorResponse {
   error?: string;
@@ -15,12 +15,18 @@ export class ApiError extends Error {
   }
 }
 
+const API_URL = "";
+
 export async function apiFetch<T>(
   title: string,
   endpoint: string,
   options?: RequestInit,
 ): Promise<T> {
-  const response = await fetch(`${API_URL}${endpoint}`, {
+  const path = endpoint.startsWith("/")
+    ? endpoint
+    : `/${endpoint}`;
+
+  const response = await fetch(`${API_URL}${path}`, {
     ...options,
     credentials: "include",
     headers: {
@@ -32,11 +38,13 @@ export async function apiFetch<T>(
   const data = await response.json();
 
   if (!response.ok) {
-    const errorData = data as ApiErrorResponse;
+    const errorData = data as {
+      error?: string;
+      message?: string;
+    };
 
     throw new ApiError(
-      errorData.error ||
-        errorData.message ||
+      errorData.error || errorData.message ||
         `${title} API request failed.`,
       response.status,
     );
