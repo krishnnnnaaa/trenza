@@ -19,7 +19,10 @@ advanced: {
     ipAddressHeaders: ["cf-connecting-ip"],
   },
 },
-
+ defaultCookieAttributes: {
+    sameSite: "none",
+    secure: true,
+  },
     emailAndPassword:{
         enabled: true,
         requireEmailVerification: true,
