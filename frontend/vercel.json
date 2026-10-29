@@ -1,0 +1,9 @@
+
+{
+  "rewrites": [
+    {
+      "source": "/api/auth/:path*",
+      "destination": "https://trenza-0qu3.onrender.com/api/auth/:path*"
+    }
+  ]
+}
