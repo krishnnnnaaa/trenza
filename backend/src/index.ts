@@ -35,9 +35,12 @@ app.use('/api/checkout', checkoutRouter)
 
 
 app.get('/', (req, res)=>{
-    return res.send('hello from -/ get route');
+    return res.send('hello from / get route');
 })
 
+app.get('/health', (req, res)=> {
+    res.status(200).json({ status: "ok",  timestamp: new Date().toISOString() });
+})
 
 app.listen(port, () =>{
     console.log(`Server is successfully running on http://localhost:${port}`);
