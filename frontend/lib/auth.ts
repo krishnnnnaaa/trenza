@@ -15,14 +15,14 @@ export async function getSessionToken(req: NextRequest){
     );
 }
         const data = await response.json();
-
-        if (!data || !data.session) {
-            return null;
-        }
         console.log("Session API status:", response.status);
 console.log("Session data exists:", !!data);
 console.log("Session exists:", !!data?.session);
 console.log("Cookie forwarded:", !!req.headers.get("cookie"));
+
+        if (!data || !data.session) {
+            return null;
+        }
         return data.session;
     } catch (error) {
         console.error("Error fetching session token:", error);
