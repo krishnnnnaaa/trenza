@@ -42,6 +42,15 @@ app.get('/health', (req, res)=> {
     res.status(200).json({ status: "ok",  timestamp: new Date().toISOString() });
 })
 
+app.get("/debug/ip-headers", (req, res) => {
+  res.json({
+    xRealIp: req.get("x-real-ip") ?? null,
+    xForwardedFor: req.get("x-forwarded-for") ?? null,
+    cfConnectingIp: req.get("cf-connecting-ip") ?? null,
+  });
+});
+
+
 app.listen(port, () =>{
     console.log(`Server is successfully running on http://localhost:${port}`);
 })
