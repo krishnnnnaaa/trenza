@@ -1,4 +1,12 @@
-// const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL!;
+
+// Browser requests use same-origin rewrites.
+// Server-side requests use the absolute Render URL.
+const API_URL =
+  typeof window === "undefined"
+    ? BACKEND_URL.replace(/\/+$/, "")
+    : "";
 
 interface ApiErrorResponse {
   error?: string;
@@ -15,18 +23,13 @@ export class ApiError extends Error {
   }
 }
 
-const API_URL = "";
-
 export async function apiFetch<T>(
   title: string,
   endpoint: string,
   options?: RequestInit,
 ): Promise<T> {
-  const path = endpoint.startsWith("/")
-    ? endpoint
-    : `/${endpoint}`;
-
-  const response = await fetch(`${API_URL}${path}`, {
+  const path = endpoint.replace(/^\/+/, "");
+  const response = await fetch(`${API_URL}/${path}`, {
     ...options,
     credentials: "include",
     headers: {
@@ -38,13 +41,11 @@ export async function apiFetch<T>(
   const data = await response.json();
 
   if (!response.ok) {
-    const errorData = data as {
-      error?: string;
-      message?: string;
-    };
+    const errorData = data as ApiErrorResponse;
 
     throw new ApiError(
-      errorData.error || errorData.message ||
+      errorData.error ||
+        errorData.message ||
         `${title} API request failed.`,
       response.status,
     );
