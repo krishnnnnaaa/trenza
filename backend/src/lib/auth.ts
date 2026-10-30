@@ -8,7 +8,12 @@ import { sendPasswordResetEmail, sendVerificationEmail } from "./email.js";
 export const auth = betterAuth({
     secret: process.env.BETTER_AUTH_SECRET!,
     baseURL: process.env.BASE_URL!,
-    trustedOrigins: [process.env.FRONTEND_URL!],
+    trustedOrigins: [
+  process.env.FRONTEND_URL!,
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  "http://192.168.29.117:3000",
+],
     database: drizzleAdapter(db, {
         provider: "pg",
         schema: schema
