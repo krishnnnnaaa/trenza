@@ -185,29 +185,6 @@ export const orderItems = pgTable("order_items", {
   }).notNull(),
 });
 
-export const reviews = pgTable(
-  "reviews",
-  {
-    id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-
-    userId: varchar("user_id", { length: 255 })
-      .notNull()
-      .references(() => user.id),
-
-    productId: integer("product_id")
-      .notNull()
-      .references(() => products.id),
-
-    rating: integer("rating").notNull(),
-    comment: text("comment"),
-
-    ...timestamps,
-  },
-  (table) => ({
-    userProductUnique: unique().on(table.userId, table.productId),
-  }),
-);
-
 export const payments = pgTable("payments", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
 
@@ -245,7 +222,6 @@ export const productsRelations = relations(products, ({ one, many }) => ({
   cartItems: many(cartItems),
   wishlistItems: many(wishlistItems),
   orderItems: many(orderItems),
-  reviews: many(reviews),
 }));
 
 export const categoriesRelations = relations(categories, ({ many }) => ({
@@ -329,17 +305,6 @@ export const orderItemRelations = relations(orderItems, ({ one }) => ({
   }),
 }));
 
-export const reviewRelations = relations(reviews, ({ one }) => ({
-  user: one(user, {
-    fields: [reviews.userId],
-    references: [user.id],
-  }),
-  product: one(products, {
-    fields: [reviews.productId],
-    references: [products.id],
-  }),
-}));
-
 export const paymentRelations = relations(payments, ({ one }) => ({
   order: one(orders, {
     fields: [payments.orderId],
@@ -352,7 +317,6 @@ export const userRelations = relations(user, ({ one, many }) => ({
   wishlist: one(wishlists),
   addresses: many(addresses),
   orders: many(orders),
-  reviews: many(reviews),
   sessions: many(session),
   accounts: many(account),
 }));

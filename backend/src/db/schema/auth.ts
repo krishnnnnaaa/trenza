@@ -13,7 +13,6 @@ export const user = pgTable("user", {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
   role: text("role").default("user").notNull(),
-  imageCldPubId: text("image_cld_pub_id"),
 });
 
 export const session = pgTable(

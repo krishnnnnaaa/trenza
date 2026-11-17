@@ -36,6 +36,13 @@
       "when": 1794906840310,
       "tag": "0004_cold_gunslinger",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794915123413,
+      "tag": "0005_uneven_energizer",
+      "breakpoints": true
     }
   ]
 }
