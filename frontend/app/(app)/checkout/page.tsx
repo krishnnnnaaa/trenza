@@ -1,10 +1,18 @@
 import CheckoutPageComponent from '@/components/checkout-page/CheckoutPageComponent'
-import React from 'react'
+import { Suspense } from 'react'
 
 const CheckoutPage = () => {
   return (
     <div className="min-h-screen w-full bg-[#FAF8F5]">
-        <CheckoutPageComponent/>
+        <Suspense
+          fallback={
+            <div className="flex min-h-[50vh] items-center justify-center">
+              Loading checkout...
+            </div>
+          }
+        >
+          <CheckoutPageComponent />
+        </Suspense>
     </div>
   )
 }
