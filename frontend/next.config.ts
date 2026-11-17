@@ -8,11 +8,11 @@ const nextConfig: NextConfig = {
       return [
         {
           source: "/api/:path*",
-          destination: "https://trenza-0qu3.onrender.com/api/:path*",
+          destination: "http://localhost:8000/api/:path*",
         },
         {
           source: "/health",
-          destination: "https://trenza-0qu3.onrender.com/health",
+          destination: "http://localhost:8000/health",
         },
       ];
     }

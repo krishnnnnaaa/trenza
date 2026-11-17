@@ -4,6 +4,7 @@ import {db} from "../db/index.js"; // your drizzle instance
 import * as schema from '../db/schema/index.js'
 import { sendPasswordResetEmail, sendVerificationEmail } from "./email.js";
 
+const isProduction = process.env.NODE_ENV === "production";
 
 export const auth = betterAuth({
     secret: process.env.BETTER_AUTH_SECRET!,
@@ -18,15 +19,17 @@ export const auth = betterAuth({
         provider: "pg",
         schema: schema
     }),
-   
-advanced: {
+   advanced: {
+  useSecureCookies: isProduction,
+
   ipAddress: {
     ipAddressHeaders: ["cf-connecting-ip"],
   },
+
   defaultCookieAttributes: {
-      sameSite: "none",
-      secure: true,
-    },
+    sameSite: isProduction ? "none" : "lax",
+    secure: isProduction,
+  },
 },
     emailAndPassword:{
         enabled: true,
@@ -60,9 +63,6 @@ advanced: {
         additionalFields: {
             role: {
                 type: 'string', required: true, defaultValue: "user", input: true
-            },
-            imageCldPubId: {
-                type: 'string', required: false, input: true
             }
         }
     }

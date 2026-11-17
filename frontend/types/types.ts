@@ -159,6 +159,7 @@ export interface AddressApiResponse {
     postalCode: string;
     country: string;
     isDefault: boolean;
+    isDeleted: boolean;
 }
 export interface addressFormType {
     fullName: string;
