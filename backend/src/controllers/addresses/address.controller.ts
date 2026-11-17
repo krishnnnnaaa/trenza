@@ -29,8 +29,12 @@ export const getAddresses = async (req: Request, res: Response) => {
     const userAddresses = await db
       .select()
       .from(addresses)
-      .where(eq(addresses.userId, session.user.id));
-
+      .where(
+        and(
+          eq(addresses.userId, session.user.id),
+          eq(addresses.isDeleted, false)
+        )
+      )
       if(userAddresses.length === 0){
         return res.status(404).json({
           error: "No saved address found. Add one to continue shopping."
@@ -299,7 +303,18 @@ export const deleteAddress = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Address not found" });
     }
 
-    await db.delete(addresses).where(eq(addresses.id, address.id));
+  await db
+  .update(addresses)
+  .set({
+    isDeleted: true,
+    updatedAt: new Date(),
+  })
+  .where(
+    and(
+      eq(addresses.id, addressId),
+      eq(addresses.userId, session.user.id)
+    )
+  );
 
     return res.status(200).json({
       message: "Address deleted successfully",

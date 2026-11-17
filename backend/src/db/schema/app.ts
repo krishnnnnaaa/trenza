@@ -131,6 +131,9 @@ export const addresses = pgTable("addresses", {
     .references(() => user.id),
 
   fullName: varchar("full_name", { length: 255 }).notNull(),
+  isDeleted: boolean("is_deleted")
+  .notNull()
+  .default(false),
   phone: varchar("phone", { length: 30 }).notNull(),
   addressLine1: varchar("address_line_1", { length: 500 }).notNull(),
   addressLine2: varchar("address_line_2", { length: 500 }),
